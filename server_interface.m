@@ -116,7 +116,7 @@ switch funct2run
         
         % command to copy back to local to make sure the right file has
         % been moved
-        str2run{2} = [sshSCP, eval([matlab_startup_dir, '.serverId']), ...
+        str2run{2} = [sshSCP, eval(['matlab_startup_dir.', serverId]), ...
             ' ', jobsDir_local, 'startup_copy.m'];
         
     otherwise
