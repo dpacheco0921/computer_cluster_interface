@@ -8,13 +8,24 @@ function server_interface(funct2run, f2run, ...
 %
 % Args:
 %   funct2run: task to run
-%       (parse, submit, status, clean, pull)
+%       (submit: submit slurm job)
+%       (status: get status of submitted jobs)
+%           (running: r)
+%           (completed: cd)
+%           (failed: f)
+%           (timeout: to)
+%           (node_fail: nf)
+%       (clean: delete files from jobsubdir in the server)
+%       (pull: pull files from the server (jobsubdir) to local copy of jobsubdir)
+%       (cancel: cancel jobs)
+%           (if f2run is not empty, it will only cancel jobs with the ID =
+%           f2run)
+%           (if f2run empty, it cancel all jobs associated with username)
 %       (push_matlab_startup, pushes startup file to be read by matlab in the server)
 %   f2run: file to submit
 %   serverId: server ID (spock or della)
 %       (needs to be defined in ssh_config)
-%   config_dir: directory of ssh_config file to use for passwordless logint
-%       to cluster
+%   config_dir: directory of ssh_config file to use for passwordless login to cluster
 %   jobsubdir: folder within jobsub to save submitted jobs, related mat
 %       files, and output txt files (impre, roirel, regrel)
 %
@@ -66,13 +77,7 @@ switch funct2run
             '; sbatch ', f2run, '.slurm'''];
         
     case 'status'
-        
-        % running: r
-        % completed: cd
-        % failed: f
-        % timeout: to
-        % node_fail: nf
-        
+                
         str2run = [sshCo, '''sacct'];
 
         if ~isempty(f2run)
@@ -106,7 +111,7 @@ switch funct2run
         
         if strcmp(serverId, 'spock')
             f2run = 'matlabpath_spock.m';
-        else
+        elseif strcmp(serverId, 'della')
             f2run = 'matlabpath_della.m';
         end
         
