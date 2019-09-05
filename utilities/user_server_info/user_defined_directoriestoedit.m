@@ -11,21 +11,24 @@ username.della = '*';
 
 drive_dir = [];
 
+% .tempfiledir directory to store temporary files
+% .permfiledir directory to store permanent files
+
 % PC
-drive_dir(1).scratchdir = 'X:\';
-drive_dir(1).bucketdir = 'V:\';
+drive_dir(1).tempfiledir = 'X:\';
+drive_dir(1).permfiledir = 'V:\';
 
 % mac
-drive_dir(2).scratchdir = '/Volumes/*/';
-drive_dir(2).bucketdir = '/Volumes/*/';
+drive_dir(2).tempfiledir = '/Volumes/*/';
+drive_dir(2).permfiledir = '/Volumes/*/';
 
 % della
-drive_dir(3).scratchdir = '/tigress/*/';
-drive_dir(3).bucketdir = [];
+drive_dir(3).tempfiledir = '/scratch/gpfs/*/';
+drive_dir(3).permfiledir = '/tigress/*/';
 
 % spock
-drive_dir(4).scratchdir = '/jukebox/scratch/*/';
-drive_dir(4).bucketdir = '/jukebox/*/';
+drive_dir(4).tempfiledir = '/jukebox/scratch/*/';
+drive_dir(4).permfiledir = '/jukebox/*/';
 
 % pick directory suited to current environment
 scratchdir = [];
@@ -36,25 +39,25 @@ bucketdir = [];
 if ispc
     
     % PC
-    scratchdir = drive_dir(1).scratchdir;
-    bucketdir = drive_dir(1).bucketdir;
+    scratchdir = drive_dir(1).tempfiledir;
+    bucketdir = drive_dir(1).permfiledir;
     
 else
     
     if ismac
 
-        scratchdir = drive_dir(2).scratchdir;
-        bucketdir = drive_dir(2).bucketdir;
+        scratchdir = drive_dir(2).tempfiledir;
+        bucketdir = drive_dir(2).permfiledir;
 
-    elseif contains(pwd, 'tigress')
+    elseif contains(pwd, 'della')
 
-        scratchdir = drive_dir(3).scratchdir;
-        bucketdir = drive_dir(3).bucketdir;
+        scratchdir = drive_dir(3).tempfiledir;
+        bucketdir = drive_dir(3).permfiledir;
 
-    else
+    elseif contains(pwd, 'spock')
 
-        scratchdir = drive_dir(4).scratchdir;
-        bucketdir = drive_dir(4).bucketdir;
+        scratchdir = drive_dir(4).tempfiledir;
+        bucketdir = drive_dir(4).permfiledir;
 
     end
     

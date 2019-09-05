@@ -1,6 +1,7 @@
 function [repoDir, jobsDir_local, ...
     jobsDir_server_o, jobsDir_server, ...
-    matlab_startup_dir, username] = getlocaldirs(targetdir, serverid)
+    matlab_startup_dir, username] = ...
+    getlocaldirs(targetdir, serverid)
 % getlocaldirs: collect all local & server directories used by the server_interface.m files
 %
 % Usage:
@@ -64,11 +65,11 @@ user_defined_directories
 
 switch serverid
     case 'spock'
-        jobsDir_server = [drive_dir(4).scratchdir, '/jobsub/', targetdir];
+        jobsDir_server = [drive_dir(4).tempfiledir, '/jobsub/', targetdir];
         jobsDir_server_o = ['spock:', jobsDir_server, '/'];
     case 'della'
-        jobsDir_server = [drive_dir(3).scratchdir, '/jobsub/', targetdir];        
-        jobsDir_server_o = ['tigress:', jobsDir_server, '/'];
+        jobsDir_server = [drive_dir(3).tempfiledir, '/jobsub/', targetdir];        
+        jobsDir_server_o = ['della:', jobsDir_server, '/'];
 end
 
 end
