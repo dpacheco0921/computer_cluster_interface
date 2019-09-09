@@ -65,10 +65,10 @@ user_defined_directories
 
 switch serverid
     case 'spock'
-        jobsDir_server = [drive_dir(4).tempfiledir, '/jobsub/', targetdir];
+        jobsDir_server = [drive_dir(4).tempfiledir, 'jobsub/', targetdir];
         jobsDir_server_o = ['spock:', jobsDir_server, '/'];
     case 'della'
-        jobsDir_server = [drive_dir(3).tempfiledir, '/jobsub/', targetdir];        
+        jobsDir_server = [drive_dir(3).tempfiledir, 'jobsub/', targetdir];        
         jobsDir_server_o = ['della:', jobsDir_server, '/'];
 end
 
