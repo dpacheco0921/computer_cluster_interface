@@ -58,8 +58,10 @@ end
 %   to run - which were locally generated and saved at jobsDir_local 
 %   (assumes it is in scratch drive)
 
-% get scratch and bucket directoties
-user_defined_directories
+% get scratch (temporary) and bucket (permanent) directories
+[matlab_startup_dir, username, ...
+    drive_dir, ~, ~] = ...
+    user_defined_directories(serverid);
 % this generates:
 %   scratchdir & bucketdir & drive_dir & matlab_startup_dir
 
