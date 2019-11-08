@@ -4,15 +4,20 @@ Matlab functions to interface with PNI cluster
 
 # Usage
 
-Using server_interface, you can:
-1) submit *.slurm files
-2) check status of submitted jobs
-3) cancel jobs
-4) clear output directory (in server/cluster)
-5) pull files from server/cluster
-6) push matlab startup file
+Using server_interface.m, you can:
+1) submit *.slurm files.
+2) check status of submitted jobs.
+3) cancel jobs.
+4) clear output directory (in server/cluster).
+5) pull files from server/cluster.
+6) push matlab startup file.
 
-For examples see pu_cluster_interface_demo.m
+To use this function
+1) Copy and edit user_defined_directoriestoedit.m (see that file for details).
+2) Save as user_defined_directories.m.
+3) to edit matlab startup in the cluster copy and edit matlabpathtoedit.m and save as matlabpath_spock.m
+
+For examples see: pu_cluster_interface_demo.m
 
 # Dependencies
 

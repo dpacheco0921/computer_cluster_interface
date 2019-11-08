@@ -33,7 +33,7 @@ addpath(genpath('/mnt/bucket/labfolder/userfolder/myRepos/fakecode'))
 rmpath(genpath('/mnt/bucket/labfolder/userfolder/myRepos/fakecode/.git'))
 
 % if using cvxpackage
-run /mnt/bucket/labfolder/userfolder/importedRepos/cvxpackage/cvx_spock/cvx_startup.m
+run /mnt/bucket/labfolder/userfolder/cvxpackage/cvx_startup.m
 
 % you might need to fix cvx bug with directories
 % look at the following paths:
