@@ -13,15 +13,14 @@ Using server_interface.m, you can:
 6) push matlab startup file.
 
 To use this function
-1) Copy and edit user_defined_directoriestoedit.m (see that file for details).
-2) Save as user_defined_directories.m.
-3) to edit matlab startup in the cluster copy and edit matlabpathtoedit.m and save as matlabpath_spock.m
+1) Copy and edit user_defined_directoriestoedit.m (see that file for details), and save as user_defined_directories.m.
+2) to edit matlab startup in the cluster copy and edit matlabpathtoedit.m and save as matlabpath_spock.m
 
 For examples see: pu_cluster_interface_demo.m
 
 # Dependencies
 
-This code in windowds requires openssh, installing using [scoop](http://scoop.sh)
+This code in windows requires openssh, installing using [scoop](http://scoop.sh)
 Run the following command from your terminal
 
 ```
@@ -31,7 +30,7 @@ set-executionpolicy unrestricted -s cu
 scoop openssh
 ```
 
-After installin ssh, you need to modify 'ssh_config'. This files is usually at
+After installin ssh, you need to modify 'ssh_config'. This file is usually at
 *\scoop\apps\openssh\5.4p1-1\etc\ssh\ssh_config.
 
 Setup passwordless SSH key, see info at [Cluster wiki](https://npcdocs.princeton.edu/index.php/SSH_Information)
