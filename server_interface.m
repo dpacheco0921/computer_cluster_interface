@@ -38,17 +38,29 @@ function server_interface(funct2run, f2run, ...
 if ~exist('serverId', 'var') || isempty(serverId)
     serverId = 'spock';
 end
-if ~exist('f2run', 'var'); f2run = []; end
+
+if ~exist('f2run', 'var')
+    f2run = [];
+end
+
 if ~exist('jobsubdir', 'var') || isempty(jobsubdir)
     jobsubdir = [];
-end
-if ~exist('config_dir', 'var') || isempty(config_dir)
-    config_dir = [];
 end
 
 % get user-defined directories
 [repoDir, jobsDir_local, jobsDir_server_o, jobsDir_server, ...
     matlab_startup_dir, username] = getlocaldirs(jobsubdir, serverId);
+
+if ~exist('config_dir', 'var') || isempty(config_dir)
+    
+    if ispc
+        config_dir = ['c:/Users/', ...
+            getenv('USERNAME'), '/.ssh/ssh_config'];
+    elseif ismac
+        config_dir = [];
+    end
+    
+end
 
 % ssh and scp commands
 if ~isempty(config_dir)
