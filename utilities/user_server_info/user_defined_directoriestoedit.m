@@ -3,7 +3,8 @@
 %   system (PC, mac, spock, or della)
 
 function [matlab_startup_dir, username, ...
-    drive_dir, tempfiledir, permfiledir, userdomain] = ...
+    drive_dir, tempfiledir, permfiledir, ...
+    userdomain, host_name] = ...
     user_defined_directories(serverid)
 % user_defined_directories: function that provides user define directories
 %   and username to use for interfacing with cluster
@@ -23,6 +24,12 @@ function [matlab_startup_dir, username, ...
 %   tempfiledir: selected temporary directory (for example scratch)
 %   permfiledir: selected permantent directory (for example bucket)
 %   userdomain: domain used for username
+%   userdomain: domain used for username (for example @*.edu)
+%   host_name: collection of names of server host(for example @*.edu)
+
+if ~exist('serverid', 'var') || isempty(serverid)
+    serverid = [];
+end
 
 % user defined directories of scratch and bucket drives
 matlab_startup_dir.spock = ...
@@ -33,7 +40,8 @@ matlab_startup_dir.della = ...
 username.spock = '*';
 username.della = '*';
 userdomain = '@**.**';
-
+host_name = {'@**.**'};
+    
 drive_dir = [];
 
 % .tempfiledir directory to store temporary files
