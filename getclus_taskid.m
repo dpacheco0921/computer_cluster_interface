@@ -14,9 +14,11 @@ if ~exist('serverID', 'var') || isempty(serverID)
     serverID = 'spock'; 
 end
 
-if contains(pwd, 'tigress') || contains(pwd, 'della')
+if strcmp(serverID, 'tigress') || strcmp(serverID, 'della')
     taskID = str2double(getenv('SLURM_ARRAY_TASK_ID'));
 elseif strcmp(serverID, 'spock')
+    taskID = str2double(getenv('SLURM_ARRAY_TASK_ID'));
+else
     taskID = str2double(getenv('SLURM_ARRAY_TASK_ID'));
 end
 

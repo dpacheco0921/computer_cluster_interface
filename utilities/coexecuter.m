@@ -45,7 +45,7 @@ end
 
 function [status_, cout] = execute_each(command2run, verbose)
 
-status_ = 1;
+status_ = 0;
 cout = [];
 
 % execute and decide if showing verbose as it runs or later

@@ -1,5 +1,5 @@
 function server_interface(funct2run, f2run, ...
-    serverId, config_dir, jobsubdir)
+    serverId, config_dir, jobsubdir, openterminal)
 % server_interface: function to interface with the cluster/servers (spock or della)
 %
 % Usage:
@@ -28,6 +28,7 @@ function server_interface(funct2run, f2run, ...
 %   config_dir: directory of ssh_config file to use for passwordless login to cluster
 %   jobsubdir: folder within jobsub to save submitted jobs, related mat
 %       files, and output txt files (impre, roirel, regrel)
+%   openterminal: flag to open terminal
 %
 % Notes
 % how to know what the default directory is
@@ -45,6 +46,10 @@ end
 
 if ~exist('jobsubdir', 'var') || isempty(jobsubdir)
     jobsubdir = [];
+end
+
+if ~exist('openterminal', 'var') || isempty(openterminal)
+    openterminal = 0;
 end
 
 % get user-defined directories
@@ -89,7 +94,11 @@ switch funct2run
                 f2run, '.slurm ', jobsDir_server_o];
         end
         
-        coexecuter(str2run)
+        if openterminal
+            eval(['!', str2run, ' &'])
+        else
+            coexecuter(str2run)
+        end
         
         % submit this job
         str2run = [sshCo, '''cd ', jobsDir_server, ...
@@ -139,7 +148,7 @@ switch funct2run
             f2run, ' ', eval(['matlab_startup_dir.', serverId])];
         
         % command to copy back to local to make sure the right file has
-        % been moved
+        %   been moved
         str2run{2} = [sshSCP, eval(['matlab_startup_dir.', serverId]), ...
             ' ', jobsDir_local, 'startup_copy.m'];
         
@@ -155,12 +164,24 @@ if ispc
 end
 
 % run command
-coexecuter(str2run)
+if openterminal
+    
+    if iscell
+        for i = 1:numel(str2run)
+            eval(['!', str2run{i}, ' &'])
+        end
+    else
+        eval(['!', str2run, ' &'])
+    end
+    
+else
+    coexecuter(str2run)
+end
 
 % cd to folder where the jobs are save
 switch funct2run
     
-    case 'pull'
+    case {'pull', 'push_matlab_startup'}
         cd(jobsDir_local)
     
 end
