@@ -166,7 +166,7 @@ end
 % run command
 if openterminal
     
-    if iscell
+    if iscell(str2run)
         for i = 1:numel(str2run)
             eval(['!', str2run{i}, ' &'])
         end
