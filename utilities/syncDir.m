@@ -1,10 +1,10 @@
 function command2submit = syncDir(iDir, oDir, log_serverId, ...
-    i_serverId, o_serverId, openterminal, config_dir)
+    i_serverId, o_serverId, openterminal, config_dir, synctype)
 % syncDir: Function to syncronize folders within servers
 %
 % Usage:
-%   command2submit = syncDir(iDir, oDir, i_serverId, ...
-%      o_serverId, openterminal, config_dir)
+%   command2submit = syncDir(iDir, oDir, log_serverId, ...
+%      i_serverId, o_serverId, openterminal, config_dir, synctype)
 %
 % Args:
 %   iDir: source dir (in local server/cluster)
@@ -15,6 +15,9 @@ function command2submit = syncDir(iDir, oDir, log_serverId, ...
 %       (needs to be defined in ssh_config)
 %   openterminal: flag to open terminal
 %   config_dir: directory of ssh_config file to use for passwordless login to cluster
+%   synctype: type of update
+%       ('update', default, it updates target folder from input folder, does not delete missing files)
+%       ('mirror', makes target folder match input folder, it deletes missing files)
 %
 % Example of bucket/scratch/tigress/della directories
 % '/jukebox/scratch/', '/jukebox/murthy/'
@@ -55,6 +58,10 @@ if ~exist('config_dir', 'var') || isempty(config_dir)
     
 end
 
+if ~exist('synctype', 'var') || isempty(synctype)
+    synctype = 'update';
+end
+
 [~, username, ~, ~, ~, ~, host_name] = user_defined_directories;
 
 eval(['username = username.', log_serverId]);
@@ -90,8 +97,13 @@ end
 % r: recursive
 % --delete: delete extraneous files from destination dirs
 
-%command2submit = [sshCo, '"rsync -avhzr ', iDir, ' ', targetSerDir, oDir, '"'];
-command2submit = [sshCo, '"rsync -avhzr --delete ', inputSerDir, iDir, ' ', targetSerDir, oDir, '"'];
+if strcmp(synctype, 'update')
+    command2submit = [sshCo, '"rsync -avhzr ', ...
+        inputSerDir, iDir, ' ', targetSerDir, oDir, '"'];
+elseif strcmp(synctype, 'mirror')
+    command2submit = [sshCo, '"rsync -avhzr --delete ', ...
+        inputSerDir, iDir, ' ', targetSerDir, oDir, '"'];
+end
 
 initT = tic;
 
