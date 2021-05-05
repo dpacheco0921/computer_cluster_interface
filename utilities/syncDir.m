@@ -1,10 +1,10 @@
 function command2submit = syncDir(iDir, oDir, log_serverId, ...
-    i_serverId, o_serverId, openterminal, config_dir, synctype)
+    i_serverId, o_serverId, openterminal, config_dir, synctype, dir2exclude)
 % syncDir: Function to syncronize folders within servers
 %
 % Usage:
 %   command2submit = syncDir(iDir, oDir, log_serverId, ...
-%      i_serverId, o_serverId, openterminal, config_dir, synctype)
+%      i_serverId, o_serverId, openterminal, config_dir, synctype, dir2exclude)
 %
 % Args:
 %   iDir: source dir (in local server/cluster)
@@ -18,6 +18,7 @@ function command2submit = syncDir(iDir, oDir, log_serverId, ...
 %   synctype: type of update
 %       ('update', default, it updates target folder from input folder, does not delete missing files)
 %       ('mirror', makes target folder match input folder, it deletes missing files)
+%   dir2exclude: directories / files to exclude
 %
 % Example of bucket/scratch/tigress/della directories
 % '/jukebox/scratch/', '/jukebox/murthy/'
@@ -62,6 +63,10 @@ if ~exist('synctype', 'var') || isempty(synctype)
     synctype = 'update';
 end
 
+if ~exist('dir2exclude', 'var') || isempty(dir2exclude)
+    dir2exclude = [];
+end
+
 [~, username, ~, ~, ~, ~, host_name] = user_defined_directories;
 
 eval(['username = username.', log_serverId]);
@@ -97,11 +102,17 @@ end
 % r: recursive
 % --delete: delete extraneous files from destination dirs
 
+% exclude directories
+str2use = [];
+for i = 1:numel(dir2exclude)
+    str2use = [str2use, '--exclude ''', dir2exclude{i}, ''' '];
+end
+
 if strcmp(synctype, 'update')
-    command2submit = [sshCo, '"rsync -avhzr ', ...
+    command2submit = [sshCo, '"rsync -avhzr ', str2use, ...
         inputSerDir, iDir, ' ', targetSerDir, oDir, '"'];
 elseif strcmp(synctype, 'mirror')
-    command2submit = [sshCo, '"rsync -avhzr --delete ', ...
+    command2submit = [sshCo, '"rsync -avhzr --delete ', str2use, ...
         inputSerDir, iDir, ' ', targetSerDir, oDir, '"'];
 end
 
