@@ -120,8 +120,10 @@ switch funct2run
 
         
         if ~isempty(f2run)
+            % cancel specific job
             str2run = [str2run, ' -b ', f2run];
         else
+            % cancel all jobs per user
             str2run = [str2run, ' -u ', eval(['username.', serverId])];
         end
         
@@ -129,18 +131,23 @@ switch funct2run
         
     case 'pull'
         
+        % pull full jobsub directory from server to local folder
         str2run = [sshSCP, jobsDir_server_o, '* ', jobsDir_local];
         
     case 'clean'
         
-    	str2run = [sshCo, '''cd ', jobsDir_server, '; rm -vf ./*', f2run,'*'''];
+    	% delete all files in server directory
+        str2run = [sshCo, '''cd ', jobsDir_server, '; rm -vf ./*', f2run,'*'''];
     
     case 'push_matlab_startup'
         
+        % choose matfile to copy
         if strcmp(serverId, 'spock')
             f2run = 'matlabpath_spock.m';
         elseif strcmp(serverId, 'della')
             f2run = 'matlabpath_della.m';
+        elseif strcmp(serverId, 'o2')
+            f2run = 'matlabpath_o2.m';
         end
         
         % command to copy
@@ -152,6 +159,12 @@ switch funct2run
         str2run{2} = [sshSCP, eval(['matlab_startup_dir.', serverId]), ...
             ' ', jobsDir_local, 'startup_copy.m'];
         
+    case 'storage'
+
+        % function to check how much storage you have used from scratch
+        %   quota
+        str2run = [sshCo, '''/n/cluster/bin/scratch3_quota.sh', ''''];
+
     otherwise
         
         fprintf('Unknown order\n')

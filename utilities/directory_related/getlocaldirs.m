@@ -66,12 +66,18 @@ end
 %   scratchdir & bucketdir & drive_dir & matlab_startup_dir
 
 switch serverid
-    case 'spock'
-        jobsDir_server = [drive_dir(4).tempfiledir, 'jobsub/', targetdir];
-        jobsDir_server_o = ['spock:', jobsDir_server, '/'];
     case 'della'
         jobsDir_server = [drive_dir(3).tempfiledir, 'jobsub/', targetdir];        
         jobsDir_server_o = ['della:', jobsDir_server, '/'];
+    case 'spock'
+        jobsDir_server = [drive_dir(4).tempfiledir, 'jobsub/', targetdir];
+        jobsDir_server_o = ['spock:', jobsDir_server, '/'];
+    case 'o2'
+        jobsDir_server = [drive_dir(5).tempfiledir, 'jobsub/', targetdir];        
+        jobsDir_server_o = ['o2:', jobsDir_server, '/'];
+    case 'tranfer'
+        jobsDir_server = [drive_dir(6).tempfiledir, 'jobsub/', targetdir];        
+        jobsDir_server_o = ['tranfer:', jobsDir_server, '/'];
 end
 
 end
