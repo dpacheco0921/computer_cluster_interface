@@ -1,6 +1,6 @@
 # pu_cluster_interface
 
-Matlab functions to interface with PNI cluster
+Matlab functions to interface with cluster (PU or HU)
 
 # Usage
 
@@ -16,7 +16,7 @@ To use this function
 1) Copy and edit user_defined_directoriestoedit.m (see that file for details), and save as user_defined_directories.m.
 2) to edit matlab startup in the cluster copy and edit matlabpathtoedit.m and save as matlabpath_spock.m
 
-For examples see: pu_cluster_interface_demo.m
+For examples see: pu_cluster_interface_demo.m or hu_cluster_interface_demo.m
 
 # Dependencies
 
@@ -30,10 +30,10 @@ set-executionpolicy unrestricted -s cu
 scoop openssh
 ```
 
-After installin ssh, you need to modify 'ssh_config'. This file is usually at
+After installing ssh, you need to modify 'ssh_config'. This file is usually at
 *\scoop\apps\openssh\5.4p1-1\etc\ssh\ssh_config.
 
-Setup passwordless SSH key, see info at [Cluster wiki](https://npcdocs.princeton.edu/index.php/SSH_Information)
+Setup passwordless SSH key, see info at [Cluster wiki PU](https://npcdocs.princeton.edu/index.php/SSH_Information) or [Cluster wiki HU](https://harvardmed.atlassian.net/wiki/spaces/O2/pages/1600651365/How+to+Generate+SSH+Keys)
 
 In ssh_config add/edit the following lines
 
