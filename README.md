@@ -1,6 +1,6 @@
-# pu_cluster_interface
+# computer_cluster_interface
 
-Matlab functions to interface with cluster (PU or HU)
+Matlab functions to interface with computer cluster (PU or HU)
 
 # Usage
 
